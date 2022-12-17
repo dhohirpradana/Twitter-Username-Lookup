@@ -1,50 +1,57 @@
-import requests
-import progressbar
-from time import sleep
-import random
 import os
+import random
+from io import open
+from time import sleep
 
-lookup_url = "https://api.twitter.com/1.1/users/show.json"
+import progressbar
+import requests
+
+LOOKUP_URL = "https://api.twitter.com/1.1/users/show.json"
 token = os.environ.get("TWITTER_BEARER_TOKEN")
 
-unusedFile = open("unused.txt", "a+")
-usedFile = open("used.txt", "a+")
+unusedFile = open("unused.txt", "a+", encoding="utf-8")
+usedFile = open("used.txt", "a+", encoding="utf-8")
 
 used = []
 unused = []
 
-max_loop = 900
-usn = "dp"
+MAX_LOOP = 900
+USN = "dp"
 
-bar = progressbar.ProgressBar(maxval=max_loop,
-                              widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+bar = progressbar.ProgressBar(
+    maxval=MAX_LOOP,
+    widgets=[progressbar.Bar("=", "[", "]"), " ", progressbar.Percentage()],
+)
 bar.start()
 
 # loop max loop times
-for i in range(max_loop):
+for i in range(MAX_LOOP):
     # update progress bar
     bar.update(i + 1)
     sleep(0.1)
-    
+
     # rand 3 digit number
-    randNum= random.randint(100, 599)
+    randNum = random.randint(100, 599)
 
     # random 5 length word
-    rand = ''.join(random.choice('abcdefghijklmnopqrstuvwxyz') for i in range(2))
-    username = usn + str(randNum)
+    RAND = "".join(random.choice("abcdefghijklmnopqrstuvwxyz") for i in range(2))
+    USERNAME = USN + str(randNum)
 
     # make request to lookup_url
-    r = requests.get(lookup_url, headers={
-                     "Authorization": "Bearer " + token}, params={"screen_name": username})
+    r = requests.get(
+        LOOKUP_URL,
+        headers={"Authorization": "Bearer " + token},
+        params={"screen_name": USERNAME},
+    )
 
     if r.status_code == 404:
-        print("Unused: ", username)
-        unused.append(username)
-        unusedFile.write(username + "\n")
+        print("Unused: ", USERNAME)
+        unused.append(USERNAME)
+        unusedFile.write(USERNAME + "\n")
     else:
-        print("Used: ", username)
-        used.append(username)
-        usedFile.write(username + "\n")
+        print("Used: ", USERNAME)
+        used.append(USERNAME)
+        usedFile.write(USERNAME + "\n")
 
 bar.finish()
 

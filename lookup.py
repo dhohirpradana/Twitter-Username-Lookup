@@ -2,9 +2,10 @@ import requests
 import progressbar
 from time import sleep
 import random
+import os
 
 lookup_url = "https://api.twitter.com/1.1/users/show.json"
-token = "AAAAAAAAAAAAAAAAAAAAAD5wagEAAAAAGGbmEmGhBJ511DURtHFgwdp6uQ8%3DqiH42x8UeZezBf3qRknLYGWrnssv6nMA3mHTZoXxmiqJiGEBCy"
+token = os.environ.get("TWITTER_BEARER_TOKEN")
 
 unusedFile = open("unused.txt", "a+")
 usedFile = open("used.txt", "a+")

@@ -34,5 +34,3 @@ python3 -m pip install progressbar
 4. *File used.txt and unused.txt will generated*
 
 # Good Luck
-
-[![twitter auto update banner](https://github.com/dhohirpradana/twitter-banner/actions/workflows/main.yml/badge.svg)](https://github.com/dhohirpradana/twitter-banner/actions/workflows/main.yml)
